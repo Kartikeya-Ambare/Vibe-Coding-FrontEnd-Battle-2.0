@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Homepage Layout - Structured with Dynamic Background & Widgets</title>
+    <!-- Google Fonts: Montserrat and Poppins for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* --- style.css content starts here --- */
+        /* Basic Reset & Body Styling */
+        html, body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            height: 100%; /* Ensure html and body take full viewport height */
+            overflow: hidden; /* Hide main scrollbar by default, controlled by inner elements */
+        }
+
+        body {
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+            color: #fff;
+            background-color: #0d1a33; /* Dark blue background from screenshots */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-size: 14px; /* Slightly smaller base font size for more content on page */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1600px; /* Max width for the entire content area */
+            padding: 10px 20px; /* Reduced top/bottom padding */
+            position: relative;
+            z-index: 1;
+            height: 100%; /* Take full height of body */
+            display: flex;
+            flex-direction: column; /* Stack top bar, then grid */
+            align-items: center;
+            justify-content: space-between; /* Distribute space vertically */
+            overflow-y: auto; /* Allow container to scroll if content overflows */
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        /* Background Elements - Circles and Shapes */
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Ensure circles and shapes don't cause scrollbars */
+            z-index: 0; /* Behind main content */
+        }
+
+        .circle, .shape {
+            position: absolute;
+            background-color: rgba(74, 144, 226, 0.1); /* Semi-transparent blue */
+            border-radius: 50%;
+            opacity: 0.7;
+            filter: blur(50px);
+            animation: floatAndFade 20s infinite ease-in-out alternate;
+        }
+
+        /* Circle sizes */
+        .large-circle-1 { top: 10%; left: 5%; width: 200px; height: 200px; animation-delay: 0s; }
+        .medium-circle-1 { top: 50%; left: 15%; width: 120px; height: 120px; animation-delay: 2s; }
+        .small-circle-1 { top: 80%; left: 5%; width: 80px; height: 80px; animation-delay: 4s; }
+        .large-circle-2 { top: 20%; right: 10%; width: 250px; height: 250px; animation-delay: 3s; }
+        .medium-circle-2 { top: 60%; right: 5%; width: 150px; height: 150px; animation-delay: 1s; }
+        .small-circle-2 { top: 90%; right: 15%; width: 100px; height: 100px; animation-delay: 5s; }
+
+        /* Shapes (e.g., squares rotated to diamonds) */
+        .shape {
+            border-radius: 10%; /* More like a rounded square/diamond */
+            animation: floatAndRotate 25s infinite ease-in-out alternate;
+        }
+        .shape-1 { top: 30%; left: 30%; width: 100px; height: 100px; transform: rotate(45deg); background-color: rgba(46, 204, 113, 0.15); animation-delay: 1s; }
+        .shape-2 { top: 70%; left: 40%; width: 150px; height: 150px; transform: rotate(45deg); background-color: rgba(241, 196, 15, 0.15); animation-delay: 4s; }
+
+        @keyframes floatAndFade {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+            50% { transform: translate(20px, 30px) scale(1.05); opacity: 0.8; }
+            100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+        }
+
+        @keyframes floatAndRotate {
+            0% { transform: translate(0, 0) rotate(45deg); opacity: 0.7; }
+            50% { transform: translate(-20px, 20px) rotate(60deg); opacity: 0.8; }
+            100% { transform: translate(0, 0) rotate(45deg); opacity: 0.7; }
+        }
+
+        /* Background Graphs (SVGs) */
+        .background-graphs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .graph {
+            position: absolute;
+            opacity: 0.3; /* Subtle */
+            filter: blur(2px);
+        }
+
+        .graph-1 { top: 5%; left: -10%; width: 30%; animation: doodleGraph 15s infinite linear alternate; }
+        .graph-2 { top: 40%; right: -5%; width: 25%; animation: doodleGraph 18s infinite linear reverse; }
+        .graph-3 { bottom: 10%; left: 10%; width: 20%; animation: doodleGraph 16s infinite linear alternate-reverse; }
+        .graph-4 { top: 25%; left: 50%; width: 15%; animation: doodleGraph 14s infinite linear; }
+
+
+        @keyframes doodleGraph {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(5px, 10px) scale(1.02); }
+            50% { transform: translate(0, 0) scale(1); }
+            75% { transform: translate(-5px, -10px) scale(0.98); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Top Ratings Bar */
+        .top-ratings-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(30, 45, 75, 0.8); /* Darker semi-transparent */
+            border-radius: 15px;
+            padding: 8px 20px;
+            gap: 25px; /* Space between rating items */
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            max-width: 90%; /* Limit width */
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+            color: #ecf0f1;
+        }
+
+        .rating-item i {
+            color: #f1c40f; /* Star color */
+        }
+
+        .rating-item .logo-small {
+            height: 18px; /* Adjust as needed for logo size */
+            filter: brightness(0) invert(1); /* Make logos white/light for dark background */
+        }
+
+        /* Main Content Grid */
+        .main-content-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+            grid-template-rows: auto;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px; /* Max width for the grid area itself */
+            padding-bottom: 40px; /* Space for content below grid */
+            grid-template-areas:
+                "hero hero hero hero"
+                "business chat expenses income"
+                "invoices invoices invoices invoices"
+                /* New areas from new_index.html */
+                "capabilities-header capabilities-header capabilities-header capabilities-header" /* New area for title and tabs combined */
+                "main-content-area main-content-area main-content-area main-content-area"
+                "product-catalog product-catalog product-catalog product-catalog"
+                "financial-insights financial-insights financial-insights financial-insights"
+                "recent-events recent-events recent-events recent-events";
+        }
+
+        /* Grid Area Assignments from index.html */
+        .hero-section { grid-area: hero; }
+        .business-report-widget { grid-area: business; }
+        .chat-message-widget { grid-area: chat; }
+        .expenses-widget { grid-area: expenses; }
+        .income-graph-widget { grid-area: income; }
+        .invoices-table-widget { grid-area: invoices; }
+        /* New grid area assignment */
+        .capabilities-header-wrapper { grid-area: capabilities-header; }
+
+
+        /* General Widget Styling */
+        .widget {
+            background-color: rgba(30, 45, 75, 0.95); /* Slightly darker, more opaque */
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .widget:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .hero-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+            color: #ffffff;
+            max-width: 800px;
+        }
+
+        .ai-insights {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border-radius: 25px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .sparkle {
+            font-size: 1.2em;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            background-color: #4a90e2; /* Primary blue */
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn:hover {
+            background-color: #357ABD;
+            transform: translateY(-2px);
+        }
+
+        .btn.secondary {
+            background-color: transparent;
+            border: 2px solid #4a90e2;
+        }
+
+        .btn.secondary:hover {
+            background-color: rgba(74, 144, 226, 0.2);
+        }
+
+        .financial-health-score {
+            font-size: 0.9em;
+            color: #2ecc71;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .financial-health-score i {
+            color: #e74c3c; /* Heart color */
+        }
+
+        /* Business Report Widget */
+        .business-report-widget {
+            text-align: center;
+            justify-content: space-between;
+            padding: 30px 20px;
+        }
+
+        .business-report-widget h4 {
+            margin: 0;
+            font-size: 1.4em;
+            color: #e0e0e0;
+        }
+
+        .business-report-widget p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+
+        .business-report-widget .date {
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+
+        .business-report-widget .logos {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .business-report-widget .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #34495e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Chat Message Widget */
+        .chat-message-widget {
+            justify-content: space-between;
+            background-color: #1a2c4a; /* Slightly different dark blue */
+        }
+
+        .chat-message-widget .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.85em;
+        }
+
+        .chat-message-widget .user-name {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .chat-message-widget .timestamp {
+            color: #7f8c8d;
+        }
+
+        .chat-message-widget .message-text {
+            font-size: 0.9em;
+            color: #b0b0b0;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .chat-message-widget .message-actions {
+            text-align: right;
+        }
+
+        .chat-message-widget .reply-btn {
+            background-color: #4a90e2;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-message-widget .reply-btn:hover {
+            background-color: #357ABD;
+        }
+
+        /* Send To Popover */
+        .send-to-popover {
+            position: absolute;
+            background-color: rgba(30, 45, 75, 0.98);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+            max-width: 250px;
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        .send-to-popover.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .send-to-popover h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        .send-to-popover .send-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .send-to-popover .option-row {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .send-to-popover .option-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 10px 5px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 0.8em;
+            color: #b0b0b0;
+            text-align: center;
+        }
+
+        .send-to-popover .option-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .send-to-popover .option-item i {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+            color: #4a90e2;
+        }
+
+        .popover-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(30, 45, 75, 0.98);
+            bottom: -10px; /* Position at the bottom to point upwards */
+            transform: translateX(-50%);
+        }
+
+        /* Expenses Widget */
+        .expenses-widget {
+            text-align: center;
+            justify-content: space-between;
+        }
+
+        .expenses-widget h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 1.5em;
+            color: #e0e0e0;
+        }
+
+        .expenses-widget .amount {
+            font-size: 2em;
+            font-weight: 700;
+            color: #e74c3c; /* Red for expenses */
+            margin-bottom: 20px;
+        }
+
+        .expenses-widget .donut-chart-placeholder {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .donut-chart {
+            width: 100px;
+            height: 100px;
+            transform: rotate(-90deg); /* Start at the top */
+        }
+
+        .chart-legend {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85em;
+            color: #b0b0b0;
+            text-align: left;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns for legend */
+            gap: 5px 15px;
+            margin-top: 10px;
+        }
+
+        .chart-legend li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap; /* Prevent wrapping */
+        }
+
+        .chart-legend .legend-color {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* Income Graph Widget */
+        .income-graph-widget {
+            justify-content: space-between;
+        }
+
+        .income-graph-widget .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+
+        .income-graph-widget .percentage.success {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+
+        .income-graph-widget .amount {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2ecc71; /* Green for income */
+            margin-bottom: 15px;
+        }
+
+        .income-graph-widget .faded {
+            font-size: 0.6em;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+
+        .income-graph-widget .bar-chart-placeholder {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 120px; /* Fixed height for bars */
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .income-graph-widget .bar-set {
+            display: flex;
+            flex-direction: column;
+            width: 15px; /* Width of each bar segment */
+            gap: 1px; /* Small gap between green and red bars */
+            position: relative; /* For tooltip or future interaction */
+            background-color: rgba(255,255,255,0.1); /* Base for total height */
+            border-radius: 3px;
+            overflow: hidden; /* Ensure bars stay within bounds */
+        }
+
+        .income-graph-widget .bar {
+            width: 100%;
+            border-radius: 2px;
+        }
+
+        .income-graph-widget .bar.green {
+            background-color: #2ecc71;
+        }
+
+        .income-graph-widget .bar.red {
+            background-color: #e74c3c;
+        }
+
+        .income-graph-widget .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75em;
+            color: #b0b0b0;
+            margin-top: 10px;
+            padding: 0 5px;
+        }
+
+        /* Invoices Table Widget */
+        .invoices-table-widget {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-x: auto; /* Allow horizontal scroll for table */
+            grid-column: span 4; /* Span all 4 columns */
+        }
+
+        .invoices-table-widget .widget-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .invoices-table-widget h4 {
+            margin: 0;
+            font-size: 1.3em;
+            color: #e0e0e0;
+        }
+
+        .invoices-table-widget .today-amount,
+        .invoices-table-widget .days-amount {
+            font-size: 0.85em;
+            color: #b0b0b0;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .invoices-table-widget table {
+            width: 100%;
+            border-collapse: separate; /* For rounded corners on cells */
+            border-spacing: 0 8px; /* Space between rows */
+            color: #ecf0f1;
+            font-size: 0.9em;
+        }
+
+        .invoices-table-widget th,
+        .invoices-table-widget td {
+            padding: 12px 15px;
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.05); /* Lighter background for cells */
+        }
+
+        .invoices-table-widget th {
+            background-color: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .invoices-table-widget tbody tr:hover td {
+            background-color: rgba(255, 255, 255, 0.1); /* Hover effect for rows */
+        }
+
+        /* Rounded corners for first/last cell in a row */
+        .invoices-table-widget td:first-child,
+        .invoices-table-widget th:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .invoices-table-widget td:last-child,
+        .invoices-table-widget th:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .invoices-table-widget .status-paid {
+            color: #2ecc71; /* Green */
+            font-weight: 600;
+        }
+
+        .invoices-table-widget .status-pending {
+            color: #f1c40f; /* Yellow */
+            font-weight: 600;
+        }
+
+        .invoices-table-widget .status-overdue {
+            color: #e74c3c; /* Red */
+            font-weight: 600;
+        }
+
+        .invoice-summary {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-item {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+
+        .summary-item .icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(74, 144, 226, 0.2);
+            color: #4a90e2;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        /* --- style.css content ends here --- */
+
+        /* --- style2.css content starts here --- */
+        /* Body and Container adjustments for new_index.html layout */
+        body {
+            align-items: flex-start; /* Align to start to allow scroll */
+            min-height: 100vh; /* Ensure body is at least full viewport height */
+            overflow-y: auto; /* Allow body to scroll */
+        }
+
+        .container {
+            padding: 20px; /* Adjusted padding */
+            /* height: 100%; Removed fixed height to allow content to push container height */
+            /* justify-content: space-between; Removed as content will flow naturally */
+            overflow-y: visible; /* Allow content to overflow and contribute to main page scroll */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav-bar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            position: sticky; /* Make it sticky at the top */
+            top: 0;
+            background-color: #0d1a33; /* Match body background */
+            z-index: 100; /* Ensure it stays on top */
+            border-radius: 10px; /* Added rounded corners */
+        }
+
+        .top-nav-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8em;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-nav-logo i {
+            color: #2ecc71; /* Accent color for the icon */
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .top-nav-link {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative; /* For dropdown indicators */
+        }
+
+        .top-nav-link:hover {
+            color: #fff;
+        }
+
+        .top-nav-link .fas {
+            font-size: 0.7em;
+            margin-left: 5px;
+            color: #7f8c8d;
+        }
+
+        .top-nav-auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-nav-auth-buttons .btn {
+            padding: 8px 18px;
+            font-size: 0.85em;
+        }
+
+        /* Main Section Title (within new wrapper) */
+        .main-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #fff;
+            margin: 0; /* Remove default vertical margins */
+            text-align: left; /* Align to start of flex container */
+            flex-shrink: 0; /* Prevent shrinking if space is tight */
+        }
+
+        /* Wrapper for Key BSS/OSS Capabilities & Solutions title and tabs */
+        .capabilities-header-wrapper {
+            grid-area: capabilities-header; /* Assign to the grid area */
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: row; /* Horizontal orientation */
+            justify-content: space-between; /* Space out title and tabs */
+            align-items: center; /* Vertically align them */
+            margin-top: 30px; /* Spacing from invoice widget */
+            margin-bottom: 25px; /* Spacing before content area */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 20px; /* Gap between title and tabs when they wrap */
+        }
+
+        /* Navigation Tabs (within new wrapper) */
+        .nav-tabs {
+            display: flex;
+            justify-content: flex-end; /* Align tabs to the right within the wrapper */
+            flex-wrap: wrap;
+            background-color: rgba(30, 45, 75, 0.9);
+            border-radius: 15px;
+            padding: 10px;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 0; /* Remove default margins as it's now in a flex container */
+            max-width: fit-content; /* Allow tabs to only take necessary width */
+        }
+
+        .tab-item {
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #b0b0b0;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-item:hover {
+            background-color: rgba(74, 144, 226, 0.15);
+            color: #fff;
+        }
+
+        .tab-item.active {
+            background-color: #4a90e2;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-item i {
+            font-size: 1.1em;
+        }
+
+        /* Content Area for Tabs */
+        .content-area {
+            grid-area: main-content-area; /* Explicitly assign to its grid area */
+            width: 100%;
+            max-width: 1200px;
+            min-height: 400px; /* Ensure some height for content */
+            padding: 20px 0; /* Adjust padding if needed */
+        }
+
+        .tab-content {
+            display: none; /* Hidden by default */
+            padding: 20px 0;
+        }
+
+        .tab-content.active {
+            display: block; /* Show active tab content */
+        }
+
+        /* Specific tab content layouts */
+        .billing-content, .support-content, .onboarding-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Left content, right image/mockup */
+            gap: 40px;
+            align-items: center;
+        }
+
+        .content-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .content-left h2 {
+            font-size: 1.8em;
+            color: #fff;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .content-left p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #b0b0b0;
+            margin-bottom: 15px;
+        }
+
+        .content-left ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-left ul li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #ecf0f1;
+            margin-bottom: 10px;
+        }
+
+        .content-left ul li i {
+            color: #2ecc71; /* Checkmark green */
+            font-size: 1.2em;
+        }
+
+        .content-left .feature-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .content-left .feature-buttons .btn {
+            padding: 10px 22px;
+        }
+
+        .content-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-mockup-widget {
+            background-color: rgba(30, 45, 75, 0.95);
+            border-radius: 30px; /* More rounded to mimic a phone */
+            padding: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 300px; /* Phone-like width */
+            aspect-ratio: 9/16; /* Aspect ratio for phone */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            border: 5px solid #2c3e50; /* Phone bezel */
+            position: relative;
+        }
+
+        .phone-display-content {
+            width: 100%;
+            height: calc(100% - 70px); /* Account for top bar and bottom action */
+            background-color: #0c1523; /* Dark display background */
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow-y: auto; /* Scrollable content */
+        }
+
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            font-size: 0.8em;
+            color: #e0e0e0;
+        }
+
+        .phone-header .time {
+            font-weight: 600;
+        }
+
+        .phone-app-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #4a90e2;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            color: #fff;
+            margin: 20px auto 10px;
+        }
+
+        .phone-message-bubble {
+            background-color: rgba(74, 144, 226, 0.2);
+            color: #e0e0e0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin: 8px 0;
+            align-self: flex-start; /* From contact */
+            font-size: 0.9em;
+        }
+
+        .phone-user-message {
+            background-color: #2ecc71; /* Green for user message */
+            align-self: flex-end; /* From user */
+            color: #0d1a33;
+        }
+
+        .call-action-circle {
+            width: 70px;
+            height: 70px;
+            background-color: #e74c3c; /* Red for call */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 20px;
+            box-shadow: 0 4px 20px rgba(231, 76, 60, 0.5);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .call-action-circle:hover {
+            transform: scale(1.05);
+        }
+
+        .call-action-circle .fas {
+            font-size: 1.8em;
+            color: #fff;
+        }
+
+        /* Product Catalog Widget (from new_index.html) */
+        .product-catalog-widget {
+            grid-area: product-catalog;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .catalog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .catalog-header h2 {
+            font-size: 1.8em;
+            color: #fff;
+            margin: 0;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .catalog-item {
+            background-color: rgba(30, 45, 75, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .catalog-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .catalog-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #2c3e50;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #4a90e2;
+        }
+
+        .catalog-item h3 {
+            margin: 0;
+            font-size: 1.3em;
+            color: #e0e0e0;
+        }
+
+        .catalog-item p {
+            font-size: 0.9em;
+            color: #b0b0b0;
+            line-height: 1.5;
+            flex-grow: 1; /* Pushes button to bottom */
+        }
+
+        .catalog-item .price {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #2ecc71;
+            margin-top: 10px;
+        }
+
+        /* Financial Insights Widget */
+        .financial-insights-widget {
+            grid-area: financial-insights;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .insights-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .insights-header h2 {
+            font-size: 1.8em;
+            color: #fff;
+            margin: 0;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .insight-card {
+            background-color: rgba(30, 45, 75, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .insight-icon {
+            font-size: 2.5em;
+            color: #f1c40f; /* Yellow for insights */
+        }
+
+        .insight-card h3 {
+            margin: 0;
+            font-size: 1.4em;
+            color: #e0e0e0;
+        }
+
+        .insight-card p {
+            font-size: 0.95em;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .insight-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #4a90e2;
+        }
+
+        .insight-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .insight-trend.positive {
+            color: #2ecc71;
+        }
+
+        .insight-trend.negative {
+            color: #e74c3c;
+        }
+
+        /* Recent Events Widget */
+        .recent-events-widget {
+            grid-area: recent-events;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+            padding-bottom: 40px; /* Extra padding for footer */
+        }
+
+        .events-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .events-header h2 {
+            font-size: 1.8em;
+            color: #fff;
+            margin: 0;
+        }
+
+        .events-header .view-all {
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .events-header .view-all:hover {
+            color: #357ABD;
+        }
+
+        .event-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: rgba(30, 45, 75, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            font-size: 0.95em;
+            color: #b0b0b0;
+        }
+
+        .event-list li:last-child {
+            border-bottom: none;
+        }
+
+        .event-type {
+            font-weight: 600;
+            color: #e0e0e0;
+            margin-right: 5px;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav-bar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(30, 45, 75, 0.9);
+            border-radius: 15px;
+            padding: 15px 20px;
+            gap: 30px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            flex-wrap: wrap;
+        }
+
+        .bottom-nav-item {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
+
+        .bottom-nav-item:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .bottom-nav-item.primary {
+            background-color: #2ecc71; /* Green accent */
+            color: #0d1a33;
+            font-weight: 600;
+        }
+
+        .bottom-nav-item.primary:hover {
+            background-color: #27ae60;
+            color: #fff;
+        }
+
+        .bottom-nav-item i {
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+
+        .bottom-nav-item.primary i {
+            color: #0d1a33; /* Darker icon for primary button */
+        }
+
+        /* Footer */
+        .main-footer {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+
+        /* --- Media Queries (Responsive Design) --- */
+        @media (max-width: 1200px) {
+            .main-content-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns */
+                grid-template-areas:
+                    "hero hero"
+                    "business expenses"
+                    "chat income"
+                    "invoices invoices"
+                    "capabilities-header capabilities-header" /* Adjust for new wrapper */
+                    "main-content-area main-content-area"
+                    "product-catalog product-catalog"
+                    "financial-insights financial-insights"
+                    "recent-events recent-events";
+            }
+            .content-area {
+                padding: 0 10px;
+            }
+            .billing-content, .support-content, .onboarding-content {
+                grid-template-columns: 1fr; /* Single column */
+            }
+            .content-right {
+                order: -1; /* Place image/mockup above text on small screens */
+                margin-bottom: 20px;
+            }
+            /* Adjustments for capabilities-header-wrapper on medium screens */
+            .capabilities-header-wrapper {
+                flex-direction: column; /* Stack title and tabs vertically */
+                align-items: flex-start; /* Align title and tabs to the left */
+                gap: 15px; /* Adjust gap when stacked */
+            }
+            .capabilities-header-wrapper .main-title {
+                text-align: center; /* Center title when stacked */
+                width: 100%; /* Take full width */
+            }
+            .capabilities-header-wrapper .nav-tabs {
+                justify-content: center; /* Center tabs when stacked */
+                width: 100%; /* Take full width */
+            }
+        }
+
+        @media (max-width: 992px) {
+            .top-nav-links {
+                display: none; /* Hide main links on smaller tablets */
+            }
+            .top-nav-bar {
+                justify-content: center; /* Center logo and auth buttons */
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            .main-title {
+                font-size: 1.8em;
+            }
+            .nav-tabs {
+                flex-direction: column; /* Stack tabs vertically */
+                align-items: center;
+            }
+            .tab-item {
+                width: 90%;
+                text-align: center;
+                justify-content: center;
+            }
+            .catalog-grid, .insights-grid {
+                grid-template-columns: 1fr; /* Single column */
+            }
+            /* Ensure capabilities-header-wrapper behaves responsively */
+            .capabilities-header-wrapper {
+                flex-direction: column; /* Ensure stacking on smaller screens */
+                align-items: center; /* Center elements when stacked */
+            }
+            .capabilities-header-wrapper .main-title {
+                text-align: center;
+            }
+            .capabilities-header-wrapper .nav-tabs {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 1.5em;
+            }
+
+            .btn {
+                padding: 8px 18px;
+                font-size: 0.85em;
+            }
+
+            .top-ratings-bar {
+                font-size: 0.65em;
+            }
+            .main-content-grid {
+                padding-bottom: 10px;
+                grid-template-columns: 1fr; /* Single column */
+                grid-template-areas:
+                    "hero"
+                    "business"
+                    "chat"
+                    "expenses"
+                    "income"
+                    "invoices"
+                    "capabilities-header" /* Adjust for new wrapper */
+                    "main-content-area"
+                    "product-catalog"
+                    "financial-insights"
+                    "recent-events";
+            }
+            .invoices-table-widget {
+                max-width: 100%; /* Allows it to stretch more on small screens */
+            }
+            .main-title {
+                font-size: 1.6em;
+                margin-top: 20px;
+                margin-bottom: 15px;
+            }
+            .content-left h2 {
+                font-size: 1.5em;
+            }
+            .phone-mockup-widget {
+                max-width: 250px;
+            }
+            .call-action-circle {
+                width: 60px;
+                height: 60px;
+                bottom: 60px;
+            }
+            .call-action-circle .fas {
+                font-size: 1.5em;
+            }
+            .product-catalog-widget .catalog-icon {
+                width: 40px;
+                height: 40px;
+            }
+            .product-catalog-widget .offer-title {
+                font-size: 1.5em;
+            }
+            .bottom-nav-bar {
+                flex-direction: column;
+                gap: 8px;
+                max-width: 80%;
+            }
+            .bottom-nav-item {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.3em;
+                padding: 0 5px;
+            }
+
+            .top-ratings-bar {
+                font-size: 0.6em;
+                gap: 5px;
+            }
+
+            .rating-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 2px;
+            }
+
+            .rating-item .logo-small {
+                height: 15px;
+            }
+            .main-title {
+                font-size: 1.4em;
+                margin-top: 20px;
+                margin-bottom: 15px;
+            }
+            .nav-tabs {
+                max-width: 95%;
+            }
+            .tab-item {
+                font-size: 0.8em;
+                padding: 6px 10px;
+            }
+            .content-left h2 {
+                font-size: 1.2em;
+            }
+            /* Adjustments for widgets on very small screens */
+            .business-report-widget .logo {
+                width: 30px;
+                height: 30px;
+            }
+            .expenses-widget .amount {
+                font-size: 1.8em;
+            }
+            .income-graph-widget .amount {
+                font-size: 1.8em;
+            }
+            .invoices-table-widget th,
+            .invoices-table-widget td {
+                padding: 8px 10px;
+                font-size: 0.8em;
+            }
+            .invoice-summary {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .summary-item {
+                font-size: 0.8em;
+            }
+            .summary-item .icon {
+                width: 25px;
+                height: 25px;
+                font-size: 1em;
+            }
+            .product-catalog-widget .offer-title {
+                font-size: 1.3em;
+            }
+        }
+        /* --- style2.css content ends here --- */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Dynamic Background Elements - Circles, Shapes, and Graphs -->
+        <div class="background-elements">
+            <div class="circle large-circle-1"></div>
+            <div class="circle medium-circle-1"></div>
+            <div class="circle small-circle-1"></div>
+            <div class="circle large-circle-2"></div>
+            <div class="circle medium-circle-2"></div>
+            <div class="circle small-circle-2"></div>
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+
+            <div class="background-graphs">
+                <!-- SVG Graph 1: Green wavy line -->
+                <svg class="graph graph-1" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 140 Q 50 80, 100 120 T 200 60 Q 250 20, 300 80 T 390 40" stroke="#2ecc71" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <!-- SVG Graph 2: Blue sweeping curve -->
+                <svg class="graph graph-2" viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 90 C 70 20, 150 80, 290 10" stroke="#4a90e2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <!-- SVG Graph 3: Yellow dynamic path -->
+                <svg class="graph graph-3" viewBox="0 0 350 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 60 S 80 20, 150 100 Q 220 140, 340 70" stroke="#f1c40f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <!-- SVG Graph 4: Red zig-zag line -->
+                 <svg class="graph graph-4" viewBox="0 0 250 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 70 L 60 30 L 120 50 L 180 10 L 240 60" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Top Navigation Bar (from new_index.html) -->
+        <nav class="top-nav-bar">
+            <a href="#" class="top-nav-logo">
+                <i class="fas fa-chart-line"></i> BSS/OSS Analytics
+            </a>
+            <div class="top-nav-links">
+                <a href="#" class="top-nav-link">Products <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="top-nav-link">Solutions <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="top-nav-link">Resources <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="top-nav-link">Company <i class="fas fa-chevron-down"></i></a>
+            </div>
+            <div class="top-nav-auth-buttons">
+                <button class="btn secondary">Sign In</button>
+                <button class="btn primary">Start Free Trial</button>
+            </div>
+        </nav>
+
+        <!-- Top Ratings Bar (from index.html) - Placed below top nav for prominence -->
+        <div class="top-ratings-bar">
+            <div class="rating-item">
+                <i class="fas fa-star"></i> 4.8 rating on Capterra
+            </div>
+            <div class="rating-item">
+                <i class="fas fa-star"></i> 4.8 rating on G2
+            </div>
+            <div class="rating-item">
+                <i class="fas fa-users"></i> 350+ reviews on Xero
+            </div>
+            <div class="rating-item">
+                <i class="fas fa-users"></i> 550+ reviews on getappbooks
+            </div>
+        </div>
+
+        <!-- Main content area, structured with a grid to hold widgets -->
+        <div class="main-content-grid">
+
+            <!-- Hero Section (from index.html) - Full width -->
+            <header class="hero-section">
+                <h1 class="hero-title">Create reports, forecasts, dashboards & consolidations</h1>
+                <div class="ai-insights">
+                    <span class="sparkle">✨</span> Now with AI-insights
+                </div>
+                <div class="hero-actions">
+                    <button class="btn primary">Start 14-day free trial ></button>
+                    <a href="#" class="btn secondary">See what we do</a>
+                </div>
+                <div class="financial-health-score">
+                    <i class="fas fa-heart"></i> 90% Financial Health Score
+                </div>
+            </header>
+
+            <!-- Business Report Widget (from index.html) -->
+            <div class="widget business-report-widget">
+                <h4>Edge Design Studio</h4>
+                <p>Business overview report</p>
+                <p class="date">August 2024</p>
+                <div class="logos">
+                    <img src="https://via.placeholder.com/40x40/34495e/FFFFFF?text=ORG" alt="Org Logo" class="logo">
+                    <img src="https://via.placeholder.com/40x40/34495e/FFFFFF?text=MTN" alt="Mountain Logo" class="logo">
+                </div>
+            </div>
+
+            <!-- Chat Message Widget (from index.html) -->
+            <div class="widget chat-message-widget">
+                <div class="message-header">
+                    <span class="user-name">Mark Bosman</span>
+                    <span class="timestamp">9:20 AM</span>
+                </div>
+                <p class="message-text">Hi Megan, let's talk about a strategy to improve these metrics.</p>
+                <div class="message-actions">
+                    <button class="reply-btn">Reply</button>
+                </div>
+                <!-- Send To Popover (positioned dynamically by JS) -->
+                <div class="widget send-to-popover">
+                    <div class="popover-arrow"></div>
+                    <h4>Send to</h4>
+                    <div class="send-options">
+                        <div class="option-row">
+                            <div class="option-item"><i class="fas fa-file-pdf"></i> PDF</div>
+                            <div class="option-item"><i class="fab fa-whatsapp"></i> WhatsApp</div>
+                        </div>
+                        <div class="option-row">
+                            <div class="option-item"><i class="fas fa-file-word"></i> Word</div>
+                            <div class="option-item"><i class="fab fa-slack"></i> Slack</div>
+                        </div>
+                        <div class="option-row">
+                            <div class="option-item"><i class="fas fa-file-excel"></i> Excel</div>
+                            <div class="option-item"><i class="fab fa-teamspeak"></i> Teams</div>
+                        </div>
+                        <div class="option-row">
+                            <div class="option-item"><i class="fas fa-envelope"></i> Email</div>
+                            <div class="option-item"><i class="fas fa-link"></i> Shared URL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expenses Widget (from index.html) -->
+            <div class="widget expenses-widget">
+                <h3>Expenses</h3>
+                <p class="amount">$56.2K</p>
+                <div class="donut-chart-placeholder">
+                    <svg width="100" height="100" viewBox="0 0 100 100" class="donut-chart">
+                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#e0e0e0" stroke-width="15"></circle>
+                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#4a90e2" stroke-width="15" stroke-dasharray="100 250"></circle>
+                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#2ecc71" stroke-width="15" stroke-dasharray="25 250" stroke-dashoffset="-100"></circle>
+                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f1c40f" stroke-width="15" stroke-dasharray="15 250" stroke-dashoffset="-125"></circle>
+                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#e74c3c" stroke-width="15" stroke-dasharray="10 250" stroke-dashoffset="-140"></circle>
+                    </svg>
+                    <ul class="chart-legend">
+                        <li><span class="legend-color" style="background-color: #4a90e2;"></span> Insurance</li>
+                        <li><span class="legend-color" style="background-color: #2ecc71;"></span> Wages</li>
+                        <li><span class="legend-color" style="background-color: #f1c40f;"></span> Rent</li>
+                        <li><span class="legend-color" style="background-color: #e74c3c;"></span> Legal Expenses</li>
+                        <li><span class="legend-color" style="background-color: #95a5a6;"></span> Other</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Income Graph Widget (from index.html) -->
+            <div class="widget income-graph-widget">
+                <div class="widget-header">
+                    Total income <span class="percentage success">↑ 36.5%</span>
+                </div>
+                <p class="amount">$426.8K <span class="faded">($87.2K over last month)</span></p>
+                <div class="bar-chart-placeholder">
+                    <div class="bar-set"><div class="bar green" style="height: 60%;"></div><div class="bar red" style="height: 30%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 80%;"></div><div class="bar red" style="height: 20%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 70%;"></div><div class="bar red" style="height: 40%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 90%;"></div><div class="bar red" style="height: 10%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 50%;"></div><div class="bar red" style="height: 60%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 75%;"></div><div class="bar red" style="height: 25%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 85%;"></div><div class="bar red" style="height: 15%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 95%;"></div><div class="bar red" style="height: 5%;"></div></div>
+                    <div class="bar-set"><div class="bar green" style="height: 65%;"></div><div class="bar red" style="height: 35%;"></div></div>
+                </div>
+                <div class="chart-labels">
+                    <span>Feb</span><span>Jan</span>
+                </div>
+            </div>
+
+            <!-- Invoices Table Widget (from index.html) - Full width -->
+            <div class="widget invoices-table-widget">
+                <div class="widget-header">
+                    <h4>Invoices</h4>
+                    <span class="today-amount">$5,296 Today</span>
+                    <span class="days-amount">$100,548 Next 30 days</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Due Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>INV001</td>
+                            <td>Chowdhary</td>
+                            <td class="status-paid">Paid</td>
+                            <td>01 Aug 2022</td>
+                            <td>01 Sep 2022</td>
+                        </tr>
+                        <tr>
+                            <td>INV002</td>
+                            <td>Joly Inc.</td>
+                            <td class="status-pending">Pending</td>
+                            <td>15 July 2022</td>
+                            <td>15 Aug 2022</td>
+                        </tr>
+                         <tr>
+                            <td>INV003</td>
+                            <td>Kiana</td>
+                            <td class="status-overdue">Overdue</td>
+                            <td>01 June 2022</td>
+                            <td>01 July 2022</td>
+                        </tr>
+                        <tr>
+                            <td>INV004</td>
+                            <td>Tech Solutions</td>
+                            <td class="status-paid">Paid</td>
+                            <td>10 Sep 2023</td>
+                            <td>10 Oct 2023</td>
+                        </tr>
+                        <tr>
+                            <td>INV005</td>
+                            <td>Global Corp</td>
+                            <td class="status-pending">Pending</td>
+                            <td>20 Aug 2023</td>
+                            <td>20 Sep 2023</td>
+                        </tr>
+                        <tr>
+                            <td>INV006</td>
+                            <td>Innovate Ltd.</td>
+                            <td class="status-overdue">Overdue</td>
+                            <td>05 Jul 2023</td>
+                            <td>05 Aug 2023</td>
+                        </tr>
+                        <tr>
+                            <td>INV007</td>
+                            <td>Creative Agency</td>
+                            <td class="status-paid">Paid</td>
+                            <td>01 Jun 2023</td>
+                            <td>01 Jul 2023</td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <div class="invoice-summary">
+                    <div class="summary-item">
+                        <span class="icon">$</span> Cash runway <br> 6 months
+                    </div>
+                    <div class="summary-item">
+                        <span class="icon">!</span> Overdue <br> $1,498
+                    </div>
+                </div>
+            </div>
+
+            <!-- New wrapper for Main Title and Navigation Tabs -->
+            <div class="capabilities-header-wrapper">
+                <h1 class="main-title">Key BSS/OSS Capabilities & Solutions</h1>
+                <nav class="nav-tabs">
+                    <div class="tab-item active" data-tab="billing">
+                        <i class="fas fa-file-invoice-dollar"></i> Billing & Charging
+                    </div>
+                    <div class="tab-item" data-tab="support">
+                        <i class="fas fa-headset"></i> Customer Support
+                    </div>
+                    <div class="tab-item" data-tab="onboarding">
+                        <i class="fas fa-user-plus"></i> Digital Onboarding
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Content Area for Tabs (from new_index.html) -->
+            <section class="content-area">
+                <!-- Billing & Charging Tab Content -->
+                <div id="billing-content" class="tab-content active">
+                    <div class="billing-content">
+                        <div class="content-left">
+                            <h2>Automated Billing & Flexible Charging</h2>
+                            <p>Streamline your financial operations with our advanced billing and charging systems. From subscription management to complex usage-based models, we provide the tools to accurately bill your customers and optimize revenue streams.</p>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Real-time rating and charging</li>
+                                <li><i class="fas fa-check-circle"></i> Subscription and recurring billing</li>
+                                <li><i class="fas fa-check-circle"></i> Flexible product catalog integration</li>
+                                <li><i class="fas fa-check-circle"></i> Multi-currency and multi-language support</li>
+                                <li><i class="fas fa-check-circle"></i> Automated invoice generation and distribution</li>
+                            </ul>
+                            <div class="feature-buttons">
+                                <button class="btn primary">Learn More</button>
+                                <button class="btn secondary">Request Demo</button>
+                            </div>
+                        </div>
+                        <div class="content-right">
+                            <div class="phone-mockup-widget">
+                                <div class="phone-header">
+                                    <span class="time">9:41 AM</span>
+                                    <div class="network-status">
+                                        <i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> 100%
+                                    </div>
+                                </div>
+                                <div class="phone-display-content">
+                                    <div class="phone-app-icon">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                    <div class="phone-message-bubble">
+                                        Hello! How can I help you with your billing inquiry today?
+                                    </div>
+                                    <div class="phone-message-bubble phone-user-message">
+                                        I have a question about my last invoice.
+                                    </div>
+                                    <div class="phone-message-bubble">
+                                        Certainly! Could you please provide your account number or the invoice ID?
+                                    </div>
+                                    <div class="phone-message-bubble phone-user-message">
+                                        It's #INV2023-08-123.
+                                    </div>
+                                    <div class="phone-message-bubble">
+                                        Thank you. One moment while I retrieve your details.
+                                    </div>
+                                </div>
+                                <div class="call-action-circle">
+                                    <i class="fas fa-phone-slash"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Support Tab Content -->
+                <div id="support-content" class="tab-content">
+                    <div class="support-content">
+                        <div class="content-left">
+                            <h2>Responsive Customer Support Solutions</h2>
+                            <p>Enhance customer satisfaction with our comprehensive support tools. From ticketing systems to AI-powered chatbots, we empower your team to resolve issues quickly and efficiently, ensuring a positive customer experience.</p>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Integrated CRM for 360-degree view</li>
+                                <li><i class="fas fa-check-circle"></i> Multi-channel communication (chat, email, phone)</li>
+                                <li><i class="fas fa-check-circle"></i> Self-service portal and knowledge base</li>
+                                <li><i class="fas fa-check-circle"></i> AI-driven automation and routing</li>
+                                <li><i class="fas fa-check-circle"></i> Performance analytics and reporting</li>
+                            </ul>
+                            <div class="feature-buttons">
+                                <button class="btn primary">Explore Support Features</button>
+                                <button class="btn secondary">Contact Sales</button>
+                            </div>
+                        </div>
+                        <div class="content-right">
+                            <div class="phone-mockup-widget">
+                                <div class="phone-header">
+                                    <span class="time">10:15 AM</span>
+                                    <div class="network-status">
+                                        <i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> 95%
+                                    </div>
+                                </div>
+                                <div class="phone-display-content">
+                                    <div class="phone-app-icon" style="background-color: #f1c40f;">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <div class="phone-message-bubble" style="background-color: rgba(241, 196, 15, 0.2);">
+                                        Welcome to our support chat! How can I assist you today?
+                                    </div>
+                                    <div class="phone-message-bubble phone-user-message" style="background-color: #2ecc71;">
+                                        My internet is not working.
+                                    </div>
+                                    <div class="phone-message-bubble" style="background-color: rgba(241, 196, 15, 0.2);">
+                                        I understand. Let's troubleshoot. Have you tried restarting your router?
+                                    </div>
+                                    <div class="phone-message-bubble phone-user-message" style="background-color: #2ecc71;">
+                                        Yes, I have. Still nothing.
+                                    </div>
+                                    <div class="phone-message-bubble" style="background-color: rgba(241, 196, 15, 0.2);">
+                                        Alright, I'll run a diagnostic from our end. Please bear with me for a moment.
+                                    </div>
+                                </div>
+                                <div class="call-action-circle" style="background-color: #2ecc71; box-shadow: 0 4px 20px rgba(46, 204, 113, 0.5);">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Onboarding Tab Content -->
+                <div id="onboarding-content" class="tab-content">
+                    <div class="onboarding-content">
+                        <div class="content-left">
+                            <h2>Seamless Digital Onboarding Experience</h2>
+                            <p>Accelerate customer acquisition with our intuitive digital onboarding platform. Automate identity verification, contract signing, and service activation to provide a fast and secure customer journey.</p>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> ID verification and e-signatures</li>
+                                <li><i class="fas fa-check-circle"></i> Automated workflow for new subscribers</li>
+                                <li><i class="fas fa-check-circle"></i> Personalized welcome journeys</li>
+                                <li><i class="fas fa-check-circle"></i> Integration with existing backend systems</li>
+                                <li><i class="fas fa-check-circle"></i> Fraud detection and compliance</li>
+                            </ul>
+                            <div class="feature-buttons">
+                                <button class="btn primary">Start Onboarding Journey</button>
+                                <button class="btn secondary">View Case Studies</button>
+                            </div>
+                        </div>
+                        <div class="content-right">
+                            <div class="phone-mockup-widget">
+                                <div class="phone-header">
+                                    <span class="time">11:00 AM</span>
+                                    <div class="network-status">
+                                        <i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> 100%
+                                    </div>
+                                </div>
+                                <div class="phone-display-content">
+                                    <div class="phone-app-icon" style="background-color: #e74c3c;">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <div class="phone-message-bubble" style="background-color: rgba(231, 76, 60, 0.2);">
+                                        Welcome! Ready to activate your new service?
+                                    </div>
+                                    <div class="phone-message-bubble phone-user-message" style="background-color: #2ecc71;">
+                                        Yes, I am!
+                                    </div>
+                                    <div class="phone-message-bubble" style="background-color: rgba(231, 76, 60, 0.2);">
+                                        Great! Please upload your ID document and take a selfie to verify your identity.
+                                    </div>
+                                    <div class="phone-message-bubble phone-user-message" style="background-color: #2ecc71;">
+                                        Done!
+                                    </div>
+                                    <div class="phone-message-bubble" style="background-color: rgba(231, 76, 60, 0.2);">
+                                        Excellent! Your account is now being set up. You will receive a confirmation email shortly.
+                                    </div>
+                                </div>
+                                <div class="call-action-circle" style="background-color: #4a90e2; box-shadow: 0 4px 20px rgba(74, 144, 226, 0.5);">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Catalog Widget (from new_index.html) -->
+            <section class="product-catalog-widget">
+                <div class="catalog-header">
+                    <h2>Our Product Offerings</h2>
+                    <a href="#" class="btn secondary">View All Products <i class="fas fa-chevron-right"></i></a>
+                </div>
+                <div class="catalog-grid">
+                    <div class="catalog-item">
+                        <div class="catalog-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <h3>Cloud Storage Pro</h3>
+                        <p>Secure and scalable cloud storage solutions for your business, ensuring data integrity and accessibility anytime, anywhere.</p>
+                        <span class="price">$29.99/month</span>
+                        <button class="btn primary">Get Started</button>
+                    </div>
+                    <div class="catalog-item">
+                        <div class="catalog-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Cyber Security Suite</h3>
+                        <p>Comprehensive security solutions protecting your digital assets from advanced threats, ransomware, and data breaches.</p>
+                        <span class="price">$49.99/month</span>
+                        <button class="btn primary">Get Started</button>
+                    </div>
+                    <div class="catalog-item">
+                        <div class="catalog-icon"><i class="fas fa-network-wired"></i></div>
+                        <h3>Enterprise Networking</h3>
+                        <p>Robust and high-performance network infrastructure designed for large-scale operations and mission-critical applications.</p>
+                        <span class="price">$99.99/month</span>
+                        <button class="btn primary">Get Started</button>
+                    </div>
+                    <div class="catalog-item">
+                        <div class="catalog-icon"><i class="fas fa-chart-bar"></i></div>
+                        <h3>Advanced Analytics</h3>
+                        <p>Leverage powerful data analytics and visualization tools to gain deep insights and make informed business decisions.</p>
+                        <span class="price">$79.99/month</span>
+                        <button class="btn primary">Get Started</button>
+                    </div>
+                    <div class="catalog-item">
+                        <div class="catalog-icon"><i class="fas fa-users-cog"></i></div>
+                        <h3>Managed IT Services</h3>
+                        <p>End-to-end IT management and support, allowing you to focus on your core business while we handle your technology.</p>
+                        <span class="price">$129.99/month</span>
+                        <button class="btn primary">Get Started</button>
+                    </div>
+                    <div class="catalog-item">
+                        <div class="catalog-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3>Mobile App Development</h3>
+                        <p>Custom mobile application development for iOS and Android, tailored to your business needs and user experience goals.</p>
+                        <span class="price">Custom Quote</span>
+                        <button class="btn primary">Learn More</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Financial Insights Widget (from new_index.html) -->
+            <section class="financial-insights-widget">
+                <div class="insights-header">
+                    <h2>Financial Insights</h2>
+                    <a href="#" class="btn secondary">Full Report <i class="fas fa-chevron-right"></i></a>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <h3>Monthly Revenue</h3>
+                        <p>Total revenue generated this month.</p>
+                        <span class="insight-value">$150,000</span>
+                        <span class="insight-trend positive"><i class="fas fa-arrow-up"></i> 12% from last month</span>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon"><i class="fas fa-coins"></i></div>
+                        <h3>Operating Expenses</h3>
+                        <p>Your total operational costs for the current period.</p>
+                        <span class="insight-value">$75,000</span>
+                        <span class="insight-trend negative"><i class="fas fa-arrow-down"></i> 5% from last month</span>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon"><i class="fas fa-chart-pie"></i></div>
+                        <h3>Profit Margin</h3>
+                        <p>The percentage of revenue that remains after all costs.</p>
+                        <span class="insight-value">50%</span>
+                        <span class="insight-trend positive"><i class="fas fa-arrow-up"></i> 2% from last month</span>
+                    </div>
+                     <div class="insight-card">
+                        <div class="insight-icon"><i class="fas fa-wallet"></i></div>
+                        <h3>Cash Flow</h3>
+                        <p>Net amount of cash and cash-equivalents moving in and out of your business.</p>
+                        <span class="insight-value">$60,000</span>
+                        <span class="insight-trend positive"><i class="fas fa-arrow-up"></i> 8% from last month</span>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        <h3>Accounts Receivable</h3>
+                        <p>Money owed to your business by customers for goods/services provided.</p>
+                        <span class="insight-value">$30,000</span>
+                        <span class="insight-trend negative"><i class="fas fa-arrow-down"></i> 3% from last month</span>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon"><i class="fas fa-file-invoice"></i></div>
+                        <h3>Accounts Payable</h3>
+                        <p>Money owed by your business to suppliers and vendors.</p>
+                        <span class="insight-value">$20,000</span>
+                        <span class="insight-trend positive"><i class="fas fa-arrow-up"></i> 1% from last month</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Events Widget (from new_index.html) -->
+            <section class="recent-events-widget">
+                <div class="events-header">
+                    <h2>Recent System Events</h2>
+                    <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+                </div>
+                <ul class="event-list">
+                    <li><span class="event-type">Login:</span> User 'admin' logged in from 192.168.1.1</li>
+                    <li><span class="event-type">Purchase:</span> Customer 'Jane Doe' purchased 'Premium Plan'</li>
+                    <li><span class="event-type">Error:</span> Database connection failed on server 'db-prod-01'</li>
+                    <li><span class="event-type">Update:</span> Product 'Basic Plan' price updated to $19.99</li>
+                    <li><span class="event-type">Notification:</span> Email sent to 'john@example.com' regarding service renewal</li>
+                    <li><span class="event-type">Login:</span> User 'support_agent' logged in from 10.0.0.5</li>
+                    <li><span class="event-type">Billing:</span> Invoice #INV004 paid by 'Tech Solutions'</li>
+                    <li><span class="event-type">Alert:</span> High CPU usage detected on 'web-server-02'</li>
+                    <li><span class="event-type">Maintenance:</span> Scheduled backup completed successfully</li>
+                    <li><span class="event-type">Purchase:</span> Customer 'Alice Smith' upgraded to 'Enterprise Plan'</li>
+                    <li><span class="event-type">Error:</span> API endpoint '/api/v1/users' returned 500 error</li>
+                </ul>
+            </section>
+
+        </div> <!-- End of main-content-grid -->
+
+        <!-- Bottom Navigation Bar (from new_index.html) -->
+        <nav class="bottom-nav-bar">
+            <a href="#" class="bottom-nav-item">Products <i class="fas fa-plus"></i></a>
+            <a href="#" class="bottom-nav-item">Solutions <i class="fas fa-plus"></i></a>
+            <a href="#" class="bottom-nav-item">Resources <i class="fas fa-plus"></i></a>
+            <a href="#" class="bottom-nav-item">Services <i class="fas fa-plus"></i></a>
+            <a href="#" class="bottom-nav-item primary">Book a Meeting</a>
+        </nav>
+
+        <!-- Main Footer (from new_index.html) -->
+        <footer class="main-footer">
+            <p>Made by Kartikeya Ambare - Combined Demo Page</p>
+        </footer>
+
+    </div> <!-- End of container -->
+
+    <script>
+        /* --- script.js content starts here --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatMessageWidget = document.querySelector('.chat-message-widget');
+            const sendToPopover = document.querySelector('.send-to-popover');
+            const replyBtn = document.querySelector('.chat-message-widget .reply-btn');
+
+            // Popover Toggling Logic
+            if (replyBtn && sendToPopover) {
+                replyBtn.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent document click from closing immediately
+
+                    // Toggle visibility using a class
+                    const isVisible = sendToPopover.classList.toggle('visible');
+
+                    if (isVisible) {
+                        // Calculate and set popover position dynamically
+                        const chatRect = chatMessageWidget.getBoundingClientRect();
+
+                        // Position the popover slightly above the chat message and aligned to its right
+                        let popoverTop = chatRect.top - sendToPopover.offsetHeight - 15; // 15px gap above
+                        let popoverLeft = chatRect.right - sendToPopover.offsetWidth; // Align right edges
+
+                        // Adjust if it goes off-screen to the top
+                        let arrowPosition = 'bottom';
+                        if (popoverTop < 10) { // Small margin from top
+                            popoverTop = chatRect.bottom + 15; // Place below if not enough space above
+                            arrowPosition = 'top';
+                        }
+
+                        // Adjust if it goes off-screen to the left
+                        if (popoverLeft < 10) {
+                            popoverLeft = 10; // 10px margin from left
+                        } else if (popoverLeft + sendToPopover.offsetWidth > window.innerWidth - 10) {
+                            popoverLeft = window.innerWidth - sendToPopover.offsetWidth - 10;
+                        }
+
+                        sendToPopover.style.top = `${popoverTop}px`;
+                        sendToPopover.style.left = `${popoverLeft}px`;
+
+                        // Adjust arrow position and direction to point to the center of the trigger (reply button)
+                        const replyBtnRect = replyBtn.getBoundingClientRect();
+                        const arrowLeft = (replyBtnRect.left + replyBtnRect.width / 2) - popoverLeft;
+                        const popoverArrow = sendToPopover.querySelector('.popover-arrow');
+
+                        popoverArrow.style.left = `${arrowLeft}px`;
+
+                        if (arrowPosition === 'top') {
+                            popoverArrow.style.borderBottom = 'none';
+                            popoverArrow.style.borderTop = '10px solid rgba(30, 45, 75, 0.98)';
+                            popoverArrow.style.top = '-10px'; /* Position above popover */
+                            popoverArrow.style.bottom = 'auto';
+                        } else { // arrowPosition === 'bottom'
+                            popoverArrow.style.borderTop = 'none';
+                            popoverArrow.style.borderBottom = '10px solid rgba(30, 45, 75, 0.98)';
+                            popoverArrow.style.bottom = '-10px'; /* Position below popover */
+                            popoverArrow.style.top = 'auto';
+                        }
+
+                    }
+                });
+            }
+
+            // Close popover if clicked outside
+            document.addEventListener('click', (event) => {
+                if (sendToPopover && sendToPopover.classList.contains('visible') &&
+                    !sendToPopover.contains(event.target) && event.target !== replyBtn) {
+                    sendToPopover.classList.remove('visible');
+                    // Reset arrow position for next display if needed (default to bottom pointing up)
+                    sendToPopover.querySelector('.popover-arrow').style.borderBottom = '10px solid rgba(30, 45, 75, 0.98)';
+                    sendToPopover.querySelector('.popover-arrow').style.borderTop = 'none';
+                    sendToPopover.querySelector('.popover-arrow').style.bottom = '-10px';
+                    sendToPopover.querySelector('.popover-arrow').style.top = 'auto';
+                }
+            });
+        });
+        /* --- script.js content ends here --- */
+
+        /* --- script2.js content starts here --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabItems = document.querySelectorAll('.nav-tabs .tab-item');
+            const tabContents = document.querySelectorAll('.content-area .tab-content');
+
+            // Function to activate a tab and its content
+            function activateTab(tabName) {
+                // Deactivate all tab items and content
+                tabItems.forEach(item => item.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Activate the clicked tab item
+                const selectedTabItem = document.querySelector(`.nav-tabs .tab-item[data-tab=\"${tabName}\"]`);
+                if (selectedTabItem) {
+                    selectedTabItem.classList.add('active');
+                }
+
+                // Activate the corresponding tab content
+                const selectedTabContent = document.getElementById(`${tabName}-content`);
+                if (selectedTabContent) {
+                    selectedTabContent.classList.add('active');
+                }
+            }
+
+            // Add click event listeners to tab items
+            tabItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const tabName = item.dataset.tab;
+                    activateTab(tabName);
+                });
+            });
+
+            // Handle the "Book a Meeting" button click
+            const bookMeetingBtn = document.querySelector('.bottom-nav-item.primary');
+            if (bookMeetingBtn) {
+                bookMeetingBtn.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                    // Instead of alert, you might show a custom modal or navigate
+                    console.log('Booking a Meeting functionality would go here! Replacing alert.');
+                    // Example: You could open a custom modal for booking.
+                    // const bookingModal = document.getElementById('bookingModal');
+                    // if (bookingModal) bookingModal.classList.add('show');
+                });
+            }
+
+            // Initial activation: activate the 'billing' tab by default when the page loads
+            activateTab('billing');
+        });
+        /* --- script2.js content ends here --- */
+    </script>
+</body>
+</html>
