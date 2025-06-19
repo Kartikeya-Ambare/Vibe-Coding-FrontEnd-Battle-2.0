@@ -21,7 +21,7 @@
 
 ## Invoices Table Widget: Displays a summary of invoices with statuses (Paid, Pending, Overdue) and a financial overview.
 
-## Key BSS/OSS Capabilities & Solutions Section:
+# Key BSS/OSS Capabilities & Solutions Section:
 
 ## Horizontal Title and Tabs: The main section title and navigation tabs (Billing & Charging, Customer Support, Digital Onboarding) are laid out horizontally on larger screens.
 
